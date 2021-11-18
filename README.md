@@ -81,7 +81,15 @@ DocumentRoot "D:/Applications/Bitnami/apache2/htdocs"
 
 Don't forget to restart the Apache server after making these changes.
 
-### Services
+### Configure Postgresql
+The app won't work without a database connection. In `config.php`, set `$dbpass` to your postgresql password
+from the installation process. Also make sure that Postgres is running with the `WAPP Manager Tool`.
+
+I've provided an SQL script that generates the necessary tables and fills them with data. 
+It can be found in `SQL Scripts/FillDatabase.sql`.
+
+
+### Auto-Start Services
 By default, the Apache Web Server and Postgres will auto-start on startup. 
 I recommend changing their startup type to manual, so that you have full control as to when these servers start.
 
