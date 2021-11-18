@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 require 'RecipeCard.php';
-$database = new Database;
+$database = Database::getInstance();
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +15,7 @@ $database = new Database;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/ScrollToTop.js"></script>
+    <script src="js/RecipeAjaxRequests.js"></script>
 </head>
 
 <body>
@@ -107,8 +108,14 @@ $database = new Database;
     <!-- Random Recipes Section   -->
     <section class="bg-light">
         <div class="container-lg">
-            <h3 class="text-center">Random Recipes</h3><hr/>
-            <div class="row">
+            <div class="text-center">
+                <h3>Random Recipes</h3><hr/>
+                <div class="row">
+                    <button id="rerollBtn" class="col-4 mx-auto btn btn-info btn-block">Reroll</button>
+                </div>
+            </div>
+
+            <div id="randomRecipes" class="row">
                 <?php
                 $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
                 displayRecipeCards($database->results());
