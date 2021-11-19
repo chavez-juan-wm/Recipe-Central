@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-require 'RecipeCard.php';
+require 'recipe-card.php';
 $database = Database::getInstance();
 ?>
 
@@ -14,33 +14,17 @@ $database = Database::getInstance();
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/ScrollToTop.js"></script>
-    <script src="js/RecipeAjaxRequests.js"></script>
+    <script src="js/scroll-to-top.js"></script>
+    <script src="js/ajax-requests.js"></script>
 </head>
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand ml-auto" href="index.php">Recipe Central</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <?php
+        require 'navbar.php';
+    ?>
 
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-<!--            <ul class='navbar-nav'>-->
-<!--                <li class='nav-item'><a class='nav-link' href='bookmarks.php'> Bookmarks </a></li>-->
-<!--            </ul>-->
 
-            <ul class="navbar-nav  ml-auto">
-                <li class='nav-item'>
-                    <a class='nav-link' data-toggle='modal' data-target='#signUpModal'><span class='fas fa-user-plus'></span> Sign Up </a>
-                </li>
-                <li class='nav-item'>
-                    <a class='nav-link' data-toggle='modal' data-target='#logInModal'><span class='fas fa-sign-in-alt'></span> Login </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
     <!-- Header -->
     <header class="masthead text-white text-center">

@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-require 'RecipeCard.php';
+require 'recipe-card.php';
 $database = Database::getInstance();
 
 // Get the type parameter from the URL

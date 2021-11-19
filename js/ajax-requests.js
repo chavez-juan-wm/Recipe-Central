@@ -1,6 +1,6 @@
 $( document ).ready(function() {
     $( "#rerollBtn" ).click(function() {
-        $.get("RecipeRequestHandler.php",
+        $.get("ajax-handler.php",
             {type: "random"},
             function(data) {
                 $("#randomRecipes").html(data);
