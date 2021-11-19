@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 require 'recipe-card.php';
-$database = Database::getInstance();
+$database = new Database();
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +23,6 @@ $database = Database::getInstance();
     <?php
         require 'navbar.php';
     ?>
-
-
 
     <!-- Header -->
     <header class="masthead text-white text-center">

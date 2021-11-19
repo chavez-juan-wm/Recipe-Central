@@ -1,5 +1,4 @@
 <?php
-
 $nav = '
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="index.php">Recipe Central</a>
@@ -8,16 +7,18 @@ $nav = '
         </button>
 
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-<!--            <ul class="navbar-nav">-->
-<!--                <li class="nav-item"><a class="nav-link" href="bookmarks.php"> Bookmarks </a></li>-->
-<!--            </ul>-->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="search.php"> Advanced Search </a>
+                </li>
+            </ul>
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#signUpModal"><span class="fas fa-user-plus"></span> Sign Up </a>
+                    <a class="nav-link" data-toggle="modal" data-target="#signUpModal" href="#"><span class="fas fa-user-plus"></span> Sign Up </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#logInModal"><span class="fas fa-sign-in-alt"></span> Login </a>
+                    <a class="nav-link" data-toggle="modal" data-target="#logInModal" href="#"><span class="fas fa-sign-in-alt"></span> Login </a>
                 </li>
             </ul>
         </div>
@@ -108,11 +109,6 @@ $logInModal = '
                                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                                     </div>
                                     <input type="password" class="form-control" id="password" placeholder="Password">
-                                </div>
-
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="staySignedIn">
-                                    <label class="form-check-label" for="staySignedIn">Stay signed in</label>
                                 </div>
 
                                 <div class="form-group">
