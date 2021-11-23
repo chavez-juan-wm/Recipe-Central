@@ -76,11 +76,11 @@ $database = new Database();
 
     <!-- Newest Recipes Section   -->
     <section>
-        <div class="container-lg">
+        <div class="container-fluid">
             <h3 class="text-center">Newest Recipes</h3><hr/>
             <div class="row">
                 <?php
-                $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC LIMIT 6;");
+                $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC LIMIT 12;");
                 displayRecipeCards($database->results());
                 ?>
             </div>
@@ -89,7 +89,7 @@ $database = new Database();
 
     <!-- Random Recipes Section   -->
     <section class="bg-light">
-        <div class="container-lg">
+        <div class="container-fluid">
             <div class="text-center">
                 <h3>Random Recipes</h3><hr/>
                 <div class="row">

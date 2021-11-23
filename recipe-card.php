@@ -3,8 +3,8 @@
 function displayRecipeCards($rows){
     foreach ($rows as $row){
         echo
-        '<div class="col-md-4 pt-5 pb-5 d-flex">
-            <div class="card border-info" style="width: 20rem;">
+        '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 pt-5 pb-5 d-flex">
+            <div class="card border-info" style="width: 25rem;">
                 <img class="card-img-top img-fluid" alt="Recipe Image Preview" src="' . $row['pictureurl'] .'">
                 <div class="card-img-overlay">
                     <button class="btn btn-info btn-md">
@@ -24,8 +24,8 @@ function displayRecipeCards($rows){
                         $size = count($ingredientArray);
 
                         // Limit the number of ingredients printed
-                        if($size > 4){
-                            $size = 4;
+                        if($size > 2){
+                            $size = 2;
                         }
                         for ($x = 0; $x < $size; $x++) {
                             echo "<li>" . $ingredientArray[$x] . '</li>';
@@ -36,9 +36,7 @@ function displayRecipeCards($rows){
                     <h6 class="card-title">Nutrition Facts</h6>
                     <div class="card-text">' .
                         '<ul><li>Protein: ' . $row['protein']  . 'g</li>' .
-                        '<li>Carbs: ' . $row['carbs']  . 'g</li>' .
-                        '<li>Fat: ' . $row['fat'] . 'g</li></ul>' .
-
+                        '<li>Carbs: ' . $row['carbs']  . 'g</li></ul>' .
                     '</div>
                     <div class="mt-auto">
                         <a href="#" class="card-link">View Full Recipe</a>
