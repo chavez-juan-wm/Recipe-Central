@@ -45,28 +45,38 @@ class Database
     }
 
     // Execute the prepared query
-    public function  execute() {
-        if(!$this->isExecuted) {
-            $this->isExecuted = $this->stmt->execute();
+    public function execute() {
+        try {
+            if(!$this->isExecuted) {
+                $this->isExecuted = $this->stmt->execute();
+            }
         }
+        catch (Exception $e) {
+            $this->isExecuted = false;
+        }
+        finally {
+            return $this->isExecuted;
+        }
+        
     }
 
     // Return all the tuples of the executed query
     public function results() {
-        $this->execute();
-
-        if($this->isExecuted) {
+        if(is_null($this->count())) {
+            return null;
+        }
+        else if($this->count() > 1) {
             return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+        else if ($this->count() == 1){
+            return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        }
 
-        return null;
     }
 
     // Return the row count of the executed query
     public function count() {
-        $this->execute();
-
-        if($this->isExecuted) {
+        if($this->execute()) {
             return $this->stmt->rowCount();
         }
 
