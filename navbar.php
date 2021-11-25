@@ -40,7 +40,7 @@ $logout = '
 ';
 
 if(isset($_SESSION['username'])) {
-    $nav = $nav . "<ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='#'> Create Recipe </a> </li> <li class='nav-item'> <a class='nav-link' href='#'> " . $_SESSION['username'] . "</a> </li>" . $logout . "</ul>";
+    $nav = $nav . "<ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='create-recipe.php'> Create Recipe </a> </li> <li class='nav-item'> <a class='nav-link' href='profile.php'> " . $_SESSION['username'] . "</a> </li>" . $logout . "</ul>";
 }
 else {
     $nav = $nav . $login;
