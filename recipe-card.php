@@ -5,7 +5,9 @@ function displayRecipeCards($rows){
         echo
         '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 pt-5 pb-5 d-flex">
             <div class="card border-info" style="width: 25rem;">
-                <img class="card-img-top img-fluid" alt="Recipe Image Preview" src="' . $row['pictureurl'] .'">
+                <div class="embed-responsive embed-responsive-4by3 border">
+                    <img alt="Recipe Image Preview" class="card-img-top embed-responsive-item" src="' . $row['pictureurl'] .'" />
+                </div>
                 <div class="card-img-overlay">
                     <button class="btn btn-info btn-md">
                         <i class="far fa-bookmark"></i>
@@ -14,8 +16,10 @@ function displayRecipeCards($rows){
                 </div>
                 
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">' . $row['recipename'] .'</h5>
-                    <p class="card-subtitle text-muted">Chef: ' . $row['username'] .'</p>
+                    <div style="transform: rotate(0);">
+                        <a href="#" class="h5 card-title stretched-link" style="color: black">' . $row['recipename'] .'</a><br><br>
+                        <p class="card-subtitle text-muted">Chef: ' . $row['username'] .'</p>
+                    </div>
                     <hr />
                     <h6 class="card-title">Ingredients</h6>
                     <div class="card-text">
@@ -38,8 +42,8 @@ function displayRecipeCards($rows){
                         '<ul><li>Protein: ' . $row['protein']  . 'g</li>' .
                         '<li>Carbs: ' . $row['carbs']  . 'g</li></ul>' .
                     '</div>
-                    <div class="mt-auto">
-                        <a href="#" class="card-link">View Full Recipe</a>
+                    <div class="card-footer bg-transparent mt-auto" style="transform: rotate(0);">
+                        <a href="#" class="card-link stretched-link">View Full Recipe</a>
                     </div>
                 </div>
             </div>

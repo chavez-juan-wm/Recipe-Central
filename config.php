@@ -30,15 +30,8 @@ class Database
 
     // In order to prepare our SQL queries, we need to bind the placeholders with values
     public function bind($placeholder, $value, $type = null) {
-        // Find the type of the value if it isn't given
-        // In our case we only need to check for int and string
         if(is_null($type)) {
-            if(is_int($value)) {
-                $type = PDO::PARAM_INT;
-            }
-            else if(is_string($value)){
-                $type = PDO::PARAM_STR;
-            }
+            $type = PDO::PARAM_STR;
         }
 
         $this->stmt->bindValue($placeholder, $value, $type);
@@ -57,29 +50,15 @@ class Database
         finally {
             return $this->isExecuted;
         }
-        
     }
 
     // Return all the tuples of the executed query
     public function results() {
-        if(is_null($this->count())) {
-            return null;
-        }
-        else if($this->count() > 1) {
+        if($this->execute()) {
             return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        else if ($this->count() == 1){
-            return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        else {
+            return null;
         }
-
-    }
-
-    // Return the row count of the executed query
-    public function count() {
-        if($this->execute()) {
-            return $this->stmt->rowCount();
-        }
-
-        return null;
     }
 }

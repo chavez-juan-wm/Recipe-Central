@@ -63,7 +63,7 @@ $signUpModal = '
                     <div class="card bg-light">
                         <article class="card-body mx-auto" style="max-width: 400px;">
                             <form method="post" action="request-handler.php" class="form"
-                                oninput=\'confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Password does not match" : "")\'>
+                                oninput=\'confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match" : "")\'>
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
@@ -125,18 +125,18 @@ $logInModal = '
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                                     </div>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
                                 </div>
 
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                                     </div>
-                                    <input type="password" name="password" class="form-control" id="login-password" placeholder="Password">
+                                    <input type="password" name="password" class="form-control" id="login-password" placeholder="Password" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="submit" name="login" class="btn btn-primary btn-block"value="Log in">
+                                    <input type="submit" name="login" class="btn btn-primary btn-block" value="Log in">
                                 </div>
                                 <p class="text-center">Don\'t have an account? <a data-toggle="modal" data-target="#signUpModal" data-dismiss="modal" href="#">Sign up</a> </p>
                             </form>

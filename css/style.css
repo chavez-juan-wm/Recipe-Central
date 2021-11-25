@@ -68,6 +68,10 @@ header.masthead h1 {
     margin-right: 0;
 }
 
+.embed-responsive .card-img-top {
+    object-fit: cover;
+}
+
 /* Features */
 .features-icons {
     padding-bottom: 2rem;
