@@ -74,7 +74,10 @@
     <!-- Newest Recipes Section   -->
     <section>
         <div class="container-fluid">
-            <h3 class="text-center">Newest Recipes</h3><hr/>
+            <div class="text-center">
+                <h3>Newest Recipes</h3><hr/>
+            </div>
+
             <div class="row">
                 <?php
                     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC LIMIT 12;");
@@ -90,7 +93,7 @@
             <div class="text-center">
                 <h3>Random Recipes</h3><hr/>
                 <div class="row">
-                    <button id="rerollBtn" class="col-4 mx-auto btn btn-info btn-block" data-target="rerollPopover">Reroll</button>
+                    <button id="rerollBtn" class="col-2 mx-auto btn btn-info btn-block" data-target="rerollPopover">Reroll</button>
                 </div>
             </div>
 

@@ -82,4 +82,47 @@ $(document).ready(function() {
 
         return false;
     });
+
+
+    $('#signUpForm').on('submit', function () {
+        $('#signUpErrLabel').empty();
+        $('#signUpBtn').addClass('disabled');
+        $('#signUpBtn').prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            url: 'request-handler.php',
+            data: $("#signUpForm").serialize()+ "&signup=true",
+            dataType: 'json',
+            success: function(response) {
+                if(response.status == 'success'){
+                    alert("IN HERE");
+                    $.ajax({
+                        type: "GET",
+                        url: 'request-handler.php',
+                        data: {type: "nav"},
+                        dataType: 'json',
+                        success: function(response) {
+                            if(response.status == 'success'){
+                                $('#signUpModal').modal('hide');
+                                $("#navbar").html(response.data);
+                            }
+                        }
+                    });
+                }
+                else if(response.status == "error"){
+                    $('#signUpErrLabel').html("Email is already taken.");
+                }
+            },
+            error: function (response){
+                $('#signUpErrLabel').html("Try again please.");
+            },
+            complete: function (data){
+                $('#signUpBtn').removeClass('disabled');
+                $('#signUpBtn').prop("disabled", false);
+            }
+        });
+
+        return false;
+    });
 });

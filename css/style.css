@@ -16,8 +16,6 @@ section {
     padding-top: 2rem;
 }
 
-
-
 header.masthead {
     position: relative;
     background: #343a40 url("/img/food-header.jpg") no-repeat center center;
@@ -50,17 +48,10 @@ header.masthead h1 {
     header.masthead h1 {
         font-size: 3rem;
     }
-
-    .container {
-        width: 100%;
-    }
 }
 
-/* SM styling */
-@media (min-width: 768px) and (max-width: 992px) {
-    .container {
-        width: 100%;
-    }
+section .container-fluid .text-center hr{
+    width:50%;
 }
 
 .card-body hr {

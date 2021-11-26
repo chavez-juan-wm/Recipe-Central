@@ -25,9 +25,9 @@
         <?php echo getNav(); ?>
     </div>
 
-    <section>
+    <section style="padding-top: 5rem;">
         <div class="container-fluid">
-            <h3 class="text-center">Create a new recipe</h3><hr/>
+            <h3 class="text-center">Create a New Recipe</h3><hr/>
         </div>
     </section>
     <!-- Recipe form -->

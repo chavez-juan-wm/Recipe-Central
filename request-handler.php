@@ -13,10 +13,14 @@ if ($_GET['type'] == "randomRecipes"){
         $response['status'] = 'success';
         $response['data'] = getRecipeCards($recipes);
     }
+
+    echo json_encode($response);
 }
 elseif ($_GET['type'] == "nav"){
     $response['status'] = 'success';
     $response['data'] = getNav();
+
+    echo json_encode($response);
 }
 else if(isset($_POST['signup'])) {
     $database->query("INSERT INTO users (userName, email, password) VALUES (:userName, :email, md5(:password)) RETURNING userid;");
@@ -26,10 +30,12 @@ else if(isset($_POST['signup'])) {
 
     $userinfo = $database->results();
     if(isset($userinfo[0])) {
+        $response['status'] = 'success';
         $_SESSION['userid'] = $userinfo[0]['userid'];
         $_SESSION['username'] = $_POST['fullName'];
-        $response['status'] = 'success';
     }
+
+    echo json_encode($response);
 }
 else if(isset($_POST['login'])) {
     $database->query("SELECT userId, userName FROM Users WHERE email=:email AND password=md5(:password)");
@@ -42,14 +48,17 @@ else if(isset($_POST['login'])) {
         $_SESSION['userid'] = $userinfo[0]['userid'];
         $_SESSION['username'] = $userinfo[0]['username'];
     }
+
+    echo json_encode($response);
 }
 else if(isset($_POST['signout'])) {
-    $response['status'] = 'success';
     unset($_SESSION['userid']);
     unset($_SESSION['username']);
+
+    header('Location: index.php');
 }
 else if(isset($_POST['updateProfile'])) {
-    if(isset($_POST['updateName'])) {
+    if(!empty($_POST['updateName'])) {
         $database->query("UPDATE users SET username = :updatedname WHERE userid = :sessionid");
         $database->bind(':updatedname', $_POST['updateName']);
         $database->bind(':sessionid', $_SESSION['userid']);
@@ -58,19 +67,20 @@ else if(isset($_POST['updateProfile'])) {
         }
     }
 
-    if(isset($_POST['updateEmail'])) {
+    if(!empty($_POST['updateEmail'])) {
         $database->query("UPDATE users SET email = :updatedemail WHERE userid = :sessionid");
         $database->bind(':updatedemail', $_POST['updateEmail']);
         $database->bind(':sessionid', $_SESSION['userid']);
         $database->execute();
     }
 
-    if(isset($_POST['newPassword'])) {
+    if(!empty($_POST['newPassword'])) {
         $database->query("UPDATE users SET password = md5(:updatedpassword) WHERE userid = :sessionid");
         $database->bind(':updatedpassword', $_POST['newPassword']);
         $database->bind(':sessionid', $_SESSION['userid']);
         $database->execute();
     }
+
     header('Location: profile.php');
 }
 else if(isset($_POST['createRecipe'])) {
@@ -98,9 +108,7 @@ else if(isset($_POST['createRecipe'])) {
         $database->query("UPDATE recipes SET ingredients = ARRAY_REMOVE(ingredients, 'this is a fake string please dont ever input this as a n ingredient') WHERE recipeid = :insertedid");
         $database->bind(':insertedid', $results[0]['recipeid']);
         $database->execute();
+
         header('Location: profile.php');
     }
 }
-
-header("HTTP/1.1 200 OK");
-echo json_encode($response);

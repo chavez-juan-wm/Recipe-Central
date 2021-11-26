@@ -59,7 +59,7 @@
                     <div class="modal-body">
                         <div class="card bg-light">
                             <article class="card-body mx-auto" style="max-width: 400px;">
-                                <form method="post" action="request-handler.php" class="form"
+                                <form id="signUpForm" class="form"
                                     oninput=\'confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match" : "")\'>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
@@ -88,11 +88,10 @@
                                         </div>
                                         <input type="password" class="form-control" name="confirmPassword" id="password2" placeholder="Repeat password" required>
                                     </div>
-        
+                                    <label class="text-danger" id="signUpErrLabel"></label><br>
                                     <div class="form-group">
-                                        <input id="signUp" type="submit" name="signup" class="btn btn-primary btn-block" value="Create Account">
+                                        <input id="signUpBtn" type="submit" class="btn btn-primary btn-block">
                                     </div>
-                                    <label id="errLabel"></label><br>
                                     <p class="text-center">Already have an account? <a role="button" class="text-primary" data-toggle="modal" data-target="#logInModal" data-dismiss="modal">Log In</a></p>
                                 </form>
                             </article>

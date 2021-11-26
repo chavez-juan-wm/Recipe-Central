@@ -6,6 +6,10 @@
         http_response_code(401);
         die();
     }
+
+    $database->query("SELECT userName, email, rating FROM Users WHERE userid=:userid;");
+    $database->bind(':userid', $_SESSION['userid']);
+    $userinfo = $database->results()[0];
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +30,27 @@
         <?php echo getNav(); ?>
     </div>
 
-    <!-- User recipes -->
-    <section>
+    <!--  User profile info  -->
+    <section style="padding-top: 5rem; padding-bottom: 2rem;">
         <div class="container-fluid">
-            <h3 class="text-center">Your Recipes</h3> <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#editProfileModal" href="#">Edit Profile</a><hr/>
+            <div class="text-center">
+                <h1><?php echo $userinfo['username'] ?></h1>
+                <h3>Rating: <?php echo $userinfo['rating'] ?></h3><br><br>
+
+                <div class="row">
+                    <button class="col-2 mx-auto btn btn-info btn-block" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User recipes -->
+    <section class="bg-light">
+        <div class="container-fluid">
+            <div class="text-center">
+                <h3>Your Recipes</h3> <hr/>
+            </div>
+
             <div class="row">
                 <?php
                     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userid = Recipes.chefID) WHERE Users.userid=:userid ORDER BY recipeID DESC;");
@@ -39,6 +60,7 @@
             </div>
         </div>
     </section>
+
     <div class="modal" id="editProfileModal" aria-labelledby="editProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -51,46 +73,38 @@
                 <div class="modal-body">
                     <div class="card bg-light">
                         <article class="card-body mx-auto" style="max-width: 400px">
-                            <form method="post" action="request-handler.php" class="form">
+                            <form method="post" id="updateForm" action="request-handler.php" class="form">
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i></span>
                                     </div>
-                                    <input type="text" name="updateName" class="form-control" placeholder="Update Name">
+                                    <input type="text" name="updateName" class="form-control" placeholder=<?php echo '"' . $userinfo['username'] . '"' ?>>
                                 </div>
 
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-envelope"></i></span>
                                     </div>
-                                    <input type="email" name="updateEmail" class="form-control" placeholder="Update Email">
+                                    <input type="email" name="updateEmail" class="form-control" placeholder=<?php echo '"' . $userinfo['email'] . '"' ?>>
                                 </div>
 
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-lock"></i></span>
                                     </div>
-                                    <input type="password" name="oldPassword" class="form-control" placeholder="Old Password">
+                                    <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="New Password">
                                 </div>
 
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-lock"></i></span>
                                     </div>
-                                    <input type="password" name="newPassword" class="form-control" placeholder="New Password">
+                                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="form-control" placeholder="Repeat New Password">
                                 </div>
-
-                                <div class="form-group input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"> <i class="fa fa-lock"></i></span>
-                                    </div>
-                                    <input type="password" name="confirmNewPassword" class="form-control" placeholder="Repeat New Password">
-                                </div>
-
+                                <label id="updateErrLabel" class="text-danger"></label><br>
                                 <div class="form-group">
-                                    <input type="submit" name="updateProfile" class="btn btn-primary btn-block" value="Update Profile">
+                                    <input type="submit" id="updateBtn" name="updateProfile" class="btn btn-primary btn-block" value="Update Profile">
                                 </div>
-                                <label id="errLabel"></label><br>
                             </form>
                         </article>
                     </div>
@@ -108,5 +122,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     <script src="js/scroll-to-top.js"></script>
     <script src="js/ajax-requests.js"></script>
+
+    <script>
+        $('#updateForm').submit(function() {
+            $('#updateErrLabel').empty();
+            if($("#newPassword").val() != $("#confirmNewPassword").val()){
+                $('#updateErrLabel').html("Passwords do not match");
+                return false;
+            }
+            else{
+                $('#updateBtn').addClass('disabled');
+                return true;
+            }
+        });
+    </script>
 </body>
 </html>
