@@ -12,7 +12,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="advanced-search.php"> Advanced Search </a>
                             </li>
-                        </ul>';
+                        ';
 
         $login = '<ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -31,10 +31,12 @@
             </li>';
 
         if(isset($_SESSION['username'])) {
-            $nav = $nav . "<ul class='navbar-nav ml-auto'> 
+            $nav = $nav . "
                             <li class='nav-item'> 
                                 <a class='nav-link' href='create-recipe.php'> Create Recipe </a> 
-                            </li> 
+                            </li> </ul>
+                            <ul class='navbar-nav ml-auto'> 
+                            
                             <li class='nav-item'> 
                                 <a class='nav-link' href='profile.php'> " . $_SESSION['username'] . "</a> 
                             </li>"
@@ -42,7 +44,7 @@
                 "</ul>";
         }
         else {
-            $nav = $nav . $login;
+            $nav = $nav . "</ul>" . $login;
         }
         $nav = $nav . "</div></div></nav>";
 

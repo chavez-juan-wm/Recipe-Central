@@ -45,7 +45,7 @@
     </section>
 
     <!-- User recipes -->
-    <section class="bg-light">
+    <section class="bg-light" style="min-height: 67.5vh;">
         <div class="container-fluid">
             <div class="text-center">
                 <h3>Your Recipes</h3> <hr/>
@@ -55,7 +55,14 @@
                 <?php
                     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userid = Recipes.chefID) WHERE Users.userid=:userid ORDER BY recipeID DESC;");
                     $database->bind(':userid', $_SESSION['userid']);
-                    echo getRecipeCards($database->results());
+                    $results = $database->results();
+
+                    if(count($results) == 0){
+                        echo "<a class='h4 mx-auto' href='create-recipe.php'> Create your own recipe today! </a>";
+                    }
+                    else{
+                        echo getRecipeCards($results);
+                    }
                 ?>
             </div>
         </div>

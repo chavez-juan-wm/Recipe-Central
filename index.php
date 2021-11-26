@@ -88,7 +88,7 @@
     </section>
 
     <!-- Random Recipes Section   -->
-    <section class="bg-light">
+    <section class="bg-light" style="min-height: 67.5vh;">
         <div class="container-fluid">
             <div class="text-center">
                 <h3>Random Recipes</h3><hr/>
