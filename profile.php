@@ -1,7 +1,11 @@
 <?php
-require 'config.php';
-require 'recipe-card.php';
-$database = new Database();
+    require 'config.php';
+    $database = new Database();
+
+    if(!isset($_SESSION['userid']) || empty($_SESSION['userid'])){
+        http_response_code(401);
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -18,18 +22,19 @@ $database = new Database();
 
 <body>
     <!-- Navbar -->
-    <?php
-    require 'navbar.php';
-    ?>
+    <div id="navbar">
+        <?php echo getNav(); ?>
+    </div>
+
     <!-- User recipes -->
     <section>
         <div class="container-fluid">
             <h3 class="text-center">Your Recipes</h3> <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#editProfileModal" href="#">Edit Profile</a><hr/>
             <div class="row">
                 <?php
-                $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userid = Recipes.chefID) WHERE Users.userid=:userid ORDER BY recipeID DESC;");
-                $database->bind(':userid', $_SESSION['userid'], PDO::PARAM_INT);
-                displayRecipeCards($database->results());
+                    $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userid = Recipes.chefID) WHERE Users.userid=:userid ORDER BY recipeID DESC;");
+                    $database->bind(':userid', $_SESSION['userid']);
+                    echo getRecipeCards($database->results());
                 ?>
             </div>
         </div>

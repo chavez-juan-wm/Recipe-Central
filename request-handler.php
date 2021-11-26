@@ -1,12 +1,22 @@
 <?php
-session_start();
 require 'config.php';
-require 'recipe-card.php';
 $database = new Database();
 
-if ($_GET['type'] == "random"){
+header('Content-type: application/json');
+$response['status'] = 'error';
+
+if ($_GET['type'] == "randomRecipes"){
     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
-    displayRecipeCards($database->results());
+    $recipes = $database->results();
+
+    if(isset($recipes)){
+        $response['status'] = 'success';
+        $response['data'] = getRecipeCards($recipes);
+    }
+}
+elseif ($_GET['type'] == "nav"){
+    $response['status'] = 'success';
+    $response['data'] = getNav();
 }
 else if(isset($_POST['signup'])) {
     $database->query("INSERT INTO users (userName, email, password) VALUES (:userName, :email, md5(:password)) RETURNING userid;");
@@ -91,3 +101,6 @@ else if(isset($_POST['signout'])) {
     unset($_SESSION['username']);
     header('Location: index.php');
 }
+
+header("HTTP/1.1 200 OK");
+echo json_encode($response);

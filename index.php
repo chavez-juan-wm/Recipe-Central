@@ -1,7 +1,6 @@
 <?php
-require 'config.php';
-require 'recipe-card.php';
-$database = new Database();
+    require 'config.php';
+    $database = new Database();
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +17,9 @@ $database = new Database();
 
 <body>
     <!-- Navbar -->
-    <?php
-        require 'navbar.php';
-    ?>
+    <div id="navbar">
+        <?php echo getNav(); ?>
+    </div>
 
     <!-- Header -->
     <header class="masthead text-white text-center">
@@ -78,8 +77,8 @@ $database = new Database();
             <h3 class="text-center">Newest Recipes</h3><hr/>
             <div class="row">
                 <?php
-                $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC LIMIT 12;");
-                displayRecipeCards($database->results());
+                    $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC LIMIT 12;");
+                    echo getRecipeCards($database->results());
                 ?>
             </div>
         </div>
@@ -91,15 +90,14 @@ $database = new Database();
             <div class="text-center">
                 <h3>Random Recipes</h3><hr/>
                 <div class="row">
-                    <button id="rerollBtn" class="col-4 mx-auto btn btn-info btn-block">Reroll</button>
+                    <button id="rerollBtn" class="col-4 mx-auto btn btn-info btn-block" data-target="rerollPopover">Reroll</button>
                 </div>
             </div>
 
             <div id="randomRecipes" class="row">
                 <?php
-                echo
-                $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
-                displayRecipeCards($database->results());
+                    $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
+                    echo getRecipeCards($database->results());
                 ?>
             </div>
         </div>

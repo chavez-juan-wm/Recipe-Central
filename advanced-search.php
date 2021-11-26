@@ -1,7 +1,6 @@
 <?php
-require 'config.php';
-require 'recipe-card.php';
-$database = new Database();
+    require 'config.php';
+    $database = new Database();
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +17,9 @@ $database = new Database();
 
 <body>
     <!-- Navbar -->
-    <?php
-    require 'navbar.php';
-    ?>
-
-
+    <div id="navbar">
+        <?php echo getNav(); ?>
+    </div>
 
     <!-- Back to top button -->
     <button type="button" class="btn btn-primary btn-floating btn-lg" id="btn-back-to-top">

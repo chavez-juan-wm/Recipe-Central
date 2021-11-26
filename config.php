@@ -1,4 +1,7 @@
 <?php
+session_start();
+require 'navbar.php';
+require 'recipe-card.php';
 
 class Database
 {

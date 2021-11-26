@@ -1,7 +1,10 @@
 <?php
-require 'config.php';
-require 'recipe-card.php';
-$database = new Database();
+    require 'config.php';
+
+    if(!isset($_SESSION['userid']) || empty($_SESSION['userid'])){
+        http_response_code(401);
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +21,9 @@ $database = new Database();
 
 <body>
     <!-- Navbar -->
-    <?php
-    require 'navbar.php';
-    ?>
+    <div id="navbar">
+        <?php echo getNav(); ?>
+    </div>
 
     <section>
         <div class="container-fluid">
