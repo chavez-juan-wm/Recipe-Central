@@ -25,10 +25,10 @@ else if(isset($_POST['signup'])) {
     $database->bind(':password', $_POST['password']);
 
     $userinfo = $database->results();
-    if(isset($userinfo)) {
+    if(isset($userinfo[0])) {
         $_SESSION['userid'] = $userinfo[0]['userid'];
         $_SESSION['username'] = $_POST['fullName'];
-        header('Location: index.php');
+        $response['status'] = 'success';
     }
 }
 else if(isset($_POST['login'])) {
@@ -37,11 +37,16 @@ else if(isset($_POST['login'])) {
     $database->bind(':password', $_POST['password']);
 
     $userinfo = $database->results();
-    if(isset($userinfo)) {
+    if(isset($userinfo[0])) {
+        $response['status'] = 'success';
         $_SESSION['userid'] = $userinfo[0]['userid'];
         $_SESSION['username'] = $userinfo[0]['username'];
-        header('Location: index.php');
     }
+}
+else if(isset($_POST['signout'])) {
+    $response['status'] = 'success';
+    unset($_SESSION['userid']);
+    unset($_SESSION['username']);
 }
 else if(isset($_POST['updateProfile'])) {
     if(isset($_POST['updateName'])) {
@@ -95,11 +100,6 @@ else if(isset($_POST['createRecipe'])) {
         $database->execute();
         header('Location: profile.php');
     }
-}
-else if(isset($_POST['signout'])) {
-    unset($_SESSION['userid']);
-    unset($_SESSION['username']);
-    header('Location: index.php');
 }
 
 header("HTTP/1.1 200 OK");

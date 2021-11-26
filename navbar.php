@@ -44,7 +44,7 @@
         else {
             $nav = $nav . $login;
         }
-        $nav = $nav . "</div></nav></div>";
+        $nav = $nav . "</div></div></nav>";
 
         $signUpModal = '<div class="modal" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -115,7 +115,7 @@
                     <div class="modal-body">
                         <div class="card bg-light">
                             <article class="card-body mx-auto" style="max-width: 400px;">
-                                <form action="request-handler.php" method="post" class="form">
+                                <form id="logInForm" class="form">
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
@@ -129,9 +129,9 @@
                                         </div>
                                         <input type="password" name="password" class="form-control" id="login-password" placeholder="Password" required>
                                     </div>
-    
+                                    <label class="text-danger" id="logInErrLabel"></label><br>
                                     <div class="form-group">
-                                        <input type="submit" name="login" class="btn btn-primary btn-block" value="Log in">
+                                        <input type="submit" id="logInBtn" class="btn btn-primary btn-block">
                                     </div>
                                     <p class="text-center">Don\'t have an account? <a role="button" class="text-primary" data-toggle="modal" data-target="#signUpModal" data-dismiss="modal">Sign up</a> </p>
                                 </form>

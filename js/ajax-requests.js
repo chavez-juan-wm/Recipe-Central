@@ -41,4 +41,45 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#logInForm').on('submit', function () {
+        $('#logInErrLabel').empty();
+        $('#logInBtn').addClass('disabled');
+        $('#logInBtn').prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            url: 'request-handler.php',
+            data: $("#logInForm").serialize()+ "&login=true",
+            dataType: 'json',
+            success: function(response) {
+                if(response.status == 'success'){
+                    $.ajax({
+                        type: "GET",
+                        url: 'request-handler.php',
+                        data: {type: "nav"},
+                        dataType: 'json',
+                        success: function(response) {
+                            if(response.status == 'success'){
+                                $('#logInModal').modal('hide');
+                                $("#navbar").html(response.data);
+                            }
+                        }
+                    });
+                }
+                else if(response.status == "error"){
+                    $('#logInErrLabel').html("Incorrect email/password.");
+                }
+            },
+            error: function (response){
+                $('#logInErrLabel').html("Try again please.");
+            },
+            complete: function (data){
+                $('#logInBtn').removeClass('disabled');
+                $('#logInBtn').prop("disabled", false);
+            }
+        });
+
+        return false;
+    });
 });
