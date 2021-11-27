@@ -139,9 +139,29 @@ $(document).ready(function() {
                 }
             });
         }
-        else{
+        else if(icon.hasClass("fas")){
             // The recipe IS bookmarked, so remove it
+            $.ajax({
+                type: "POST",
+                url: 'request-handler.php',
+                data: {removebookmark: "true", recipe: recipeid},
+                dataType: 'json',
+                success: function(response) {
+                    if(response.status === 'success'){
+                        icon.removeClass('fas').addClass('far');
+                    }
+                    else if(response.status === "error"){
+                        errorPopup(target);
+                    }
+                },
+                error: function (){
+                    errorPopup(target);
+                },
+                complete: function (){
+                    bookmarkBtn.removeClass('disabled');
+                    bookmarkBtn.prop("disabled", false);
+                }
+            });
         }
-        
     });
 });

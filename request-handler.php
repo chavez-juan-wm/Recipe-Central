@@ -27,6 +27,17 @@ elseif(isset($_POST['addbookmark'])){
 
     echo json_encode($response);
 }
+elseif(isset($_POST['removebookmark'])){
+    $database->query("DELETE FROM Bookmarks WHERE userid =:userID AND recipeid = :recipeID;");
+    $database->bind(':userID', $_SESSION['userid']);
+    $database->bind(':recipeID', $_POST['recipe']);
+
+    if($database->execute()) {
+        $response['status'] = 'success';
+    }
+
+    echo json_encode($response);
+}
 else if(isset($_POST['signup'])) {
     $database->query("INSERT INTO users (userName, email, password) VALUES (:userName, :email, md5(:password)) RETURNING userid;");
     $database->bind(':userName', $_POST['fullName']);
