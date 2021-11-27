@@ -1,6 +1,14 @@
 <?php
-    function getRecipeCards($rows){
+    function getRecipeCards($database, $rows){
         $response = "";
+
+        if(isset($_SESSION['userid'])){
+            $bookmark = "bookmark";
+        }
+        else{
+            $bookmark = "login";
+        }
+
         foreach ($rows as $row){
             $card =
             '<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 pt-5 pb-5 d-flex">
@@ -9,9 +17,25 @@
                         <img alt="Recipe Image Preview" class="card-img-top embed-responsive-item" src="' . $row['pictureurl'] .'" />
                     </div>
                     <div class="card-img-overlay">
-                        <button class="btn btn-info btn-md">
-                            <i class="far fa-bookmark"></i>
-                            <!-- far is filled in; far is outline   -->                                   
+                        <button class="' . $bookmark . ' btn btn-info btn-md" data-recipeid="' . $row['recipeid'] . '">    
+                            <i class="';
+                            // fas is filled in; far is outline
+                            if(isset($_SESSION['userid'])) {
+                                $database->query("SELECT * FROM bookmarks WHERE userid=" . $_SESSION['userid'] ." AND recipeid=" . $row['recipeid'] . ";");
+                                $results = $database->results();
+
+                                if (count($results) == 0) {
+                                    $card = $card . "far";
+                                }
+                                else {
+                                    $card = $card . "fas";
+                                }
+                            }
+                            else {
+                                $card = $card . 'far';
+                            }
+
+            $card = $card . ' fa-bookmark"></i>                                   
                         </button>
                     </div>
                     

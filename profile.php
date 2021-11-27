@@ -61,7 +61,7 @@
                         echo "<a class='h4 mx-auto' href='create-recipe.php'> Create your own recipe today! </a>";
                     }
                     else{
-                        echo getRecipeCards($results);
+                        echo getRecipeCards($database, $results);
                     }
                 ?>
             </div>

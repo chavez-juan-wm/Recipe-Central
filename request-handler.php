@@ -11,7 +11,18 @@ if (isset($_GET['reroll'])){
 
     if(isset($recipes)){
         $response['status'] = 'success';
-        $response['data'] = getRecipeCards($recipes);
+        $response['data'] = getRecipeCards($database, $recipes);
+    }
+
+    echo json_encode($response);
+}
+elseif(isset($_POST['addbookmark'])){
+    $database->query("INSERT INTO Bookmarks(userID, recipeID) Values(:userID, :recipeID);");
+    $database->bind(':userID', $_SESSION['userid']);
+    $database->bind(':recipeID', $_POST['recipe']);
+
+    if($database->execute()) {
+        $response['status'] = 'success';
     }
 
     echo json_encode($response);

@@ -81,7 +81,7 @@
             <div class="row">
                 <?php
                     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC LIMIT 12;");
-                    echo getRecipeCards($database->results());
+                    echo getRecipeCards($database, $database->results());
                 ?>
             </div>
         </div>
@@ -100,7 +100,7 @@
             <div id="randomRecipes" class="row">
                 <?php
                     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
-                    echo getRecipeCards($database->results());
+                    echo getRecipeCards($database, $database->results());
                 ?>
             </div>
         </div>
