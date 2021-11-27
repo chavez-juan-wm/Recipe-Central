@@ -73,6 +73,15 @@ else if(isset($_POST['signout'])) {
 
     header('Location: index.php');
 }
+else if(isset($_POST['deleteProfile'])) {
+    $database->query("DELETE FROM Users WHERE userID = :userID;");
+    $database->bind(':userID', $_SESSION['userid']);
+    $userinfo = $database->execute();
+
+    unset($_SESSION['userid']);
+    unset($_SESSION['username']);
+    header('Location: index.php');
+}
 else if(isset($_POST['updateProfile'])) {
     if(!empty($_POST['updateName'])) {
         $database->query("UPDATE users SET username = :updatedname WHERE userid = :sessionid");

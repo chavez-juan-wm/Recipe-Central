@@ -113,6 +113,11 @@
                                     <input type="submit" id="updateBtn" name="updateProfile" class="btn btn-primary btn-block" value="Update Profile">
                                 </div>
                             </form>
+                            <form method="post" action="request-handler.php" class="form">
+                                <div class="form-group">
+                                    <input type="submit" id="updateBtn" name="deleteProfile" class="btn btn-danger btn-block" value="Delete Account">
+                                </div>
+                            </form>
                         </article>
                     </div>
                 </div>
