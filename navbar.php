@@ -34,7 +34,10 @@
             $nav = $nav . "
                             <li class='nav-item'> 
                                 <a class='nav-link' href='create-recipe.php'> Create Recipe </a> 
-                            </li> </ul>
+                            </li> 
+                            <li class='nav-item'> 
+                                <a class='nav-link' href='bookmarks.php'> Bookmarks </a> 
+                            </li></ul>
                             <ul class='navbar-nav ml-auto'> 
                             
                             <li class='nav-item'> 
