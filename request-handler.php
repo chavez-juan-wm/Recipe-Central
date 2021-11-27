@@ -5,7 +5,7 @@ $database = new Database();
 header('Content-type: application/json');
 $response['status'] = 'error';
 
-if ($_GET['type'] == "randomRecipes"){
+if (isset($_GET['reroll'])){
     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
     $recipes = $database->results();
 
@@ -13,12 +13,6 @@ if ($_GET['type'] == "randomRecipes"){
         $response['status'] = 'success';
         $response['data'] = getRecipeCards($recipes);
     }
-
-    echo json_encode($response);
-}
-elseif ($_GET['type'] == "nav"){
-    $response['status'] = 'success';
-    $response['data'] = getNav();
 
     echo json_encode($response);
 }

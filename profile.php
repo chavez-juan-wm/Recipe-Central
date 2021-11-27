@@ -85,14 +85,14 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i></span>
                                     </div>
-                                    <input type="text" name="updateName" class="form-control" placeholder=<?php echo '"' . $userinfo['username'] . '"' ?>>
+                                    <input type="text" name="updateName" class="form-control" placeholder="Update Name">
                                 </div>
 
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-envelope"></i></span>
                                     </div>
-                                    <input type="email" name="updateEmail" class="form-control" placeholder=<?php echo '"' . $userinfo['email'] . '"' ?>>
+                                    <input type="email" name="updateEmail" class="form-control" placeholder="Update Email">
                                 </div>
 
                                 <div class="form-group input-group">

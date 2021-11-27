@@ -22,7 +22,7 @@ $(document).ready(function() {
         $.ajax({
             type: "GET",
             url: 'request-handler.php',
-            data: {type: "randomRecipes"},
+            data: {reroll: "true"},
             dataType: 'json',
             success: function(response) {
                 if(response.status == 'success'){
@@ -42,7 +42,8 @@ $(document).ready(function() {
         });
     });
 
-    $('#logInForm').on('submit', function () {
+    $('#logInForm').on('submit', function (e) {
+        e.preventDefault(); // Stop the form from submitting
         $('#logInErrLabel').empty();
         $('#logInBtn').addClass('disabled');
         $('#logInBtn').prop("disabled", true);
@@ -54,18 +55,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if(response.status == 'success'){
-                    $.ajax({
-                        type: "GET",
-                        url: 'request-handler.php',
-                        data: {type: "nav"},
-                        dataType: 'json',
-                        success: function(response) {
-                            if(response.status == 'success'){
-                                $('#logInModal').modal('hide');
-                                $("#navbar").html(response.data);
-                            }
-                        }
-                    });
+                    location.reload(); // Reload the page
                 }
                 else if(response.status == "error"){
                     $('#logInErrLabel').html("Incorrect email/password.");
@@ -79,12 +69,10 @@ $(document).ready(function() {
                 $('#logInBtn').prop("disabled", false);
             }
         });
-
-        return false;
     });
 
-
-    $('#signUpForm').on('submit', function () {
+    $('#signUpForm').on('submit', function (e) {
+        e.preventDefault(); // Stop the form from submitting
         $('#signUpErrLabel').empty();
         $('#signUpBtn').addClass('disabled');
         $('#signUpBtn').prop("disabled", true);
@@ -96,19 +84,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if(response.status == 'success'){
-                    alert("IN HERE");
-                    $.ajax({
-                        type: "GET",
-                        url: 'request-handler.php',
-                        data: {type: "nav"},
-                        dataType: 'json',
-                        success: function(response) {
-                            if(response.status == 'success'){
-                                $('#signUpModal').modal('hide');
-                                $("#navbar").html(response.data);
-                            }
-                        }
-                    });
+                    location.reload(); // Reload the page
                 }
                 else if(response.status == "error"){
                     $('#signUpErrLabel').html("Email is already taken.");
@@ -122,7 +98,5 @@ $(document).ready(function() {
                 $('#signUpBtn').prop("disabled", false);
             }
         });
-
-        return false;
     });
 });
