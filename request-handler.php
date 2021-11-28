@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+require 'recipe-card.php';
 $database = new Database();
 
 header('Content-type: application/json');
@@ -135,5 +136,23 @@ else if(isset($_POST['createRecipe'])) {
         $database->execute();
 
         header('Location: profile.php');
+    }
+}
+
+else if(isset($_POST['searchBtn'])) {
+    if(!empty($_POST['searchText'])) {
+        $database->query("SELECT * FROM recipes WHERE recipename LIKE '&:userInput&'");
+        $database->bind(':userInput', $_POST['searchText']);
+    }
+    else {
+        $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC;");
+        $recipes = $database->results();
+        
+        if(isset($recipes)){
+            $response['status'] = 'success';
+            $response['data'] = getRecipeCards($database, $recipes);
+        }
+
+        echo json_encode($response);
     }
 }

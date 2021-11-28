@@ -12,6 +12,37 @@ $(document).ready(function() {
         $(this).parents(".popover").popover('hide');
     });
 
+    $('#searchForm').on('submit', function() {
+        let ref = this
+        $(ref).parents(".popover").popover('hide');
+        $(ref).addClass('disabled');
+        $(ref).prop("disabled", true);
+        let target = $(ref).data("target");
+        
+        
+        $.ajax({
+            type: "GET",
+            url: 'request-handler.php',
+            data: {type: "searchForm"},
+            dataType: 'json',
+            success: function(response) {
+                if(response.status == 'success'){
+                    $("#results").html(resoponse.data);
+                }
+                else if(response.status == "error") {
+                    errorPopup(target);
+                }
+            },
+            error: function(response) {
+                errorPopup(target);
+            },
+            complete: function (data) {
+                $(ref).removeClass('disabled');
+                $(ref).prop("disabled", false);
+            }
+        });
+    });
+
     $("#rerollBtn").click(function() {
         let rerollBtn = $(this);
         $('.popover').popover('hide');

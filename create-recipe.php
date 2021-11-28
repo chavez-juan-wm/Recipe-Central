@@ -41,7 +41,15 @@
 
                 <div class="form-group ">
                     <h3>Recipe type: </h3>
-                    <input type="text" name="recipetype" class="form-control" required>
+                    <select name="recipetype" class="btn btn-light">
+                        <option value="Appetizers and Snacks">Appetizers and Snacks</option>
+                        <option value="Main Dishes">Main Dishes</option>
+                        <option value="World Cuisine">World Cuisine</option>
+                        <option value="Fruits and Vegetables">Fruits and Vegetables</option>
+                        <option value="Soups, Stews and Chili Recipes">Soups, Stews and Chili Recipes</option>
+                        <option value="Side Dish">Side Dish</option>
+                        <option value="Meat and Poultry">Meat and Poultry</option>
+                    </select>
                 </div>
 
                 <div class="form-group ">
