@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button name="updateRecipe" class="btn btn-primary btn-block" value="<?php echo $recipeinfo['recipeid'] ?>">Edit Recipe</button>
+                    <button name="updateRecipe" class="btn btn-primary btn-block" value="<?php echo $recipeinfo['recipeid'] ?>">Update Recipe</button>
                 </div>
             </form>
 

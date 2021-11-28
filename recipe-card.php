@@ -53,11 +53,13 @@
                     
                     <div class="card-body d-flex flex-column">
                         <div style="transform: rotate(0);">
-                            <a href="#" class="h5 card-title stretched-link" style="color: black">' . $row['recipename'] .'</a><br><br>
-                            <p class="card-subtitle text-muted">Chef: ' . $row['username'] .'</p>
+                            <form method="get" action="recipe.php">
+                                <button value="'. $row['recipeid'] .'" name="recipeid" class="btn btn-block btn-link stretched-link" style="color: black"> <span class="h5 card-title">' . $row['recipename'] . '</span></button>
+                            </form>
+                            <br><p class="card-subtitle text-muted">Chef: ' . $row['username'] .'</p>
                             <i class="card-subtitle text-muted">' . $row['foodtype'] .'</i>
                         </div>
-                        <hr />
+                        <hr/>
                         <h6 class="card-title">Ingredients</h6>
                         <div class="card-text">
                             <ul>';
@@ -80,7 +82,9 @@
                             '<li>Carbs: ' . $row['carbs']  . 'g</li></ul>' .
                         '</div>
                         <div class="card-footer bg-transparent mt-auto" style="transform: rotate(0);">
-                            <a href="#" class="card-link stretched-link">View Full Recipe</a>
+                            <form method="get" action="recipe.php">
+                                <button value="'. $row['recipeid'] .'" name="recipeid" class="btn btn-link card-link stretched-link">View Full Recipe</button>
+                            </form>
                         </div>
                     </div>
                 </div>
