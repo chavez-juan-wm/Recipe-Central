@@ -76,7 +76,7 @@ else if(isset($_POST['signout'])) {
 else if(isset($_POST['deleteProfile'])) {
     $database->query("DELETE FROM Users WHERE userID = :userID;");
     $database->bind(':userID', $_SESSION['userid']);
-    $userinfo = $database->execute();
+    $database->execute();
 
     unset($_SESSION['userid']);
     unset($_SESSION['username']);
@@ -113,7 +113,7 @@ else if(isset($_POST['createRecipe'])) {
     $ingredientArray = explode(',', $_POST['ingredients']);
     
     $database->query("INSERT INTO recipes(chefID, recipeName, foodType, pictureUrl, protein, carbs, fat, sugars) VALUES (:chefid, :recipename, :foodtype, :pictureurl, :protein, :carbs, :fat, :sugars) RETURNING recipeid");
-    $database->bind(':chefid', $_SESSION['userid'], PDO::PARAM_INT);
+    $database->bind(':chefid', $_SESSION['userid']);
     $database->bind(':recipename', $_POST['recipename']);
     $database->bind(':foodtype', $_POST['recipetype']);
     $database->bind(':pictureurl', $_POST['imagelink']);
@@ -137,7 +137,43 @@ else if(isset($_POST['createRecipe'])) {
         header('Location: profile.php');
     }
 }
+else if(isset($_POST['updateRecipe'])) {
+    $_POST['ingredients'] = "this is a fake string please dont ever input this as a n ingredient, " . $_POST['ingredients'];
+    $ingredientArray = explode(',', $_POST['ingredients']);
 
+    $database->query("UPDATE Recipes SET recipename=:recipename, foodtype=:foodtype, pictureurl=:pictureurl, ingredients = null, protein=:protein, carbs=:carbs, fat=:fat, sugars=:sugars WHERE recipeid=:recipeID");
+    $database->bind(':recipeID', $_POST['updateRecipe']);
+    $database->bind(':recipename', $_POST['recipename']);
+    $database->bind(':foodtype', $_POST['recipetype']);
+    $database->bind(':pictureurl', $_POST['imagelink']);
+    $database->bind(':protein', $_POST['protein']);
+    $database->bind(':carbs', $_POST['carbs']);
+    $database->bind(':fat', $_POST['fat']);
+    $database->bind(':sugars', $_POST['sugars']);
+    $results = $database->results();
+
+    if(isset($results)) {
+        foreach($ingredientArray as $item) {
+            $database->query("UPDATE recipes SET ingredients = ARRAY_APPEND(ingredients, :array) WHERE recipeid = :insertedid");
+            $database->bind(':array', $item);
+            $database->bind(':insertedid', $_POST['updateRecipe']);
+            $database->execute();
+        }
+        $database->query("UPDATE recipes SET ingredients = ARRAY_REMOVE(ingredients, 'this is a fake string please dont ever input this as a n ingredient') WHERE recipeid = :insertedid");
+        $database->bind(':insertedid', $_POST['updateRecipe']);
+        $database->execute();
+    }
+
+    header('Location: profile.php');
+}
+else if(isset($_POST['deleteRecipe'])) {
+    $database->query("DELETE FROM Recipes WHERE recipeID = :recipeID AND chefID = :userID;");
+    $database->bind(':recipeID', $_POST['deleteRecipe']);
+    $database->bind(':userID', $_SESSION['userid']);
+    $userinfo = $database->execute();
+
+    header('Location: profile.php');
+}
 else if(isset($_GET['search'])) {
     if(!empty($_GET['searchText'])) {
         if($_GET['searchType'] == "recipename") {

@@ -1,5 +1,5 @@
 <?php
-    function getRecipeCards($database, $rows){
+    function getRecipeCards($database, $rows, $showEdit = false){
         $response = "";
 
         if(isset($_SESSION['userid'])){
@@ -17,7 +17,7 @@
                         <img alt="Recipe Image Preview" class="card-img-top embed-responsive-item" src="' . $row['pictureurl'] .'" />
                     </div>
                     <div class="card-img-overlay">
-                        <button class="' . $bookmark . ' btn btn-info btn-md" data-recipeid="' . $row['recipeid'] . '">    
+                        <button class="' . $bookmark . ' btn btn-info btn-md float-left" data-recipeid="' . $row['recipeid'] . '">    
                             <i class="';
                             // fas is filled in; far is outline
                             if(isset($_SESSION['userid'])) {
@@ -35,9 +35,21 @@
                                 $card = $card . 'far';
                             }
 
-            $card = $card . ' fa-bookmark"></i>                                   
-                        </button>
-                    </div>
+            $card .= ' fa-bookmark"></i>                                   
+                        </button>';
+
+                        if($showEdit == true) {
+                            $database->query("SELECT * FROM recipes WHERE chefid=" . $_SESSION['userid'] ." AND recipeid=" . $row['recipeid'] . ";");
+                            $results = $database->results();
+
+                            if (count($results) == 1) {
+                                $card.= '<form action="edit-recipe.php" method="get">
+                                            <button class="btn btn-success btn-md float-right" name="recipeid" value="' . $row['recipeid'] . '"><i class="far fa-edit"></i></button>
+                                         </form>';
+                            }
+                        }
+
+                    $card .= '</div>
                     
                     <div class="card-body d-flex flex-column">
                         <div style="transform: rotate(0);">
@@ -57,9 +69,9 @@
                                 $size = 2;
                             }
                             for ($x = 0; $x < $size; $x++) {
-                                $card = $card . "<li>" . $ingredientArray[$x] . '</li>';
+                                $card .= "<li>" . $ingredientArray[$x] . '</li>';
                             }
-                            $card = $card . '</ul>
+                            $card .= '</ul>
                         </div>
                         
                         <h6 class="card-title">Nutrition Facts</h6>
@@ -74,7 +86,7 @@
                 </div>
             </div>';
 
-            $response = $response . $card;
+            $response .= $card;
         }
 
         return $response;

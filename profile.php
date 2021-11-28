@@ -1,12 +1,12 @@
 <?php
     require 'config.php';
-    $database = new Database();
 
     if(!isset($_SESSION['userid']) || empty($_SESSION['userid'])){
         http_response_code(401);
         die();
     }
 
+    $database = new Database();
     $database->query("SELECT userName, email, rating FROM Users WHERE userid=:userid;");
     $database->bind(':userid', $_SESSION['userid']);
     $userinfo = $database->results()[0];
@@ -61,7 +61,7 @@
                         echo "<a class='h4 mx-auto' href='create-recipe.php'> Create your own recipe today! </a>";
                     }
                     else{
-                        echo getRecipeCards($database, $results);
+                        echo getRecipeCards($database, $results, true);
                     }
                 ?>
             </div>
