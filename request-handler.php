@@ -155,7 +155,6 @@ else if(isset($_GET['search'])) {
             }
         }
     }
-
     else {
         $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN (SELECT * FROM recipes WHERE foodtype LIKE :types) as Recipes ON Users.userID = Recipes.chefID)");
         $database->bind(':types', '%' . $_GET['recipetype'] . '%');

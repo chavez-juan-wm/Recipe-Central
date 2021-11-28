@@ -43,6 +43,7 @@
                         <div style="transform: rotate(0);">
                             <a href="#" class="h5 card-title stretched-link" style="color: black">' . $row['recipename'] .'</a><br><br>
                             <p class="card-subtitle text-muted">Chef: ' . $row['username'] .'</p>
+                            <i class="card-subtitle text-muted">' . $row['foodtype'] .'</i>
                         </div>
                         <hr />
                         <h6 class="card-title">Ingredients</h6>

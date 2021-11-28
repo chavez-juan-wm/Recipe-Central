@@ -32,14 +32,16 @@
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
 
                 <!-- Search recipe form -->
-                <div class="form-row">
-                    <div class="col-12 col-md-9 mb-2 mb-md-0">
-                        <input ID="recipe" class="form-control form-control-lg" type="search" placeholder="Enter a recipe name">
+                <form action="advanced-search.php" method="get" class="form">
+                    <div class="form-row">
+                        <div class="col-12 col-md-9 mb-2 mb-md-0">
+                            <input class="form-control form-control-lg" type="search" name="searchText" placeholder="Enter a recipe name">
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <button class="btn btn-block btn-lg btn-primary">Search</button>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-3">
-                        <button ID="search" class="btn btn-block btn-lg btn-primary" OnClick="search_Click">Search</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </header>

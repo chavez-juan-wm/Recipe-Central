@@ -7,7 +7,7 @@
     {
         private $host = 'localhost';
         private $dbuser = 'postgres';
-        private $dbpass = 'admin';          // Update the password with your postgresql password
+        private $dbpass = '';          // Update the password with your postgresql password
         private $dbname='postgres';
         private $dbh;
         private $stmt;

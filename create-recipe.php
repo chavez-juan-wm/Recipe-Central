@@ -41,7 +41,7 @@
 
                 <div class="form-group ">
                     <h3>Recipe type: </h3>
-                    <select name="recipetype" class="btn btn-light">
+                    <select name="recipetype" class="custom-select">
                         <option value="Appetizers and Snacks">Appetizers and Snacks</option>
                         <option value="Main Dishes">Main Dishes</option>
                         <option value="World Cuisine">World Cuisine</option>
