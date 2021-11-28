@@ -12,22 +12,22 @@ $(document).ready(function() {
         $(this).parents(".popover").popover('hide');
     });
 
-    $('#searchForm').on('submit', function() {
-        let ref = this
-        $(ref).parents(".popover").popover('hide');
-        $(ref).addClass('disabled');
-        $(ref).prop("disabled", true);
-        let target = $(ref).data("target");
-        
-        
+    $('#searchForm').on('submit', function(e) {
+        e.preventDefault();
+        let searchSubmit = $('#searchSubmit');
+        $('.popover').popover('hide');
+        searchSubmit.addClass('disabled');
+        searchSubmit.prop("disabled", true);
+        let target = '[data-target="searchButton"]';
+
         $.ajax({
             type: "GET",
             url: 'request-handler.php',
-            data: {type: "searchForm"},
+            data: $("#searchForm").serialize()+ "&search=true",
             dataType: 'json',
             success: function(response) {
                 if(response.status == 'success'){
-                    $("#results").html(resoponse.data);
+                    $("#results").html(response.data);
                 }
                 else if(response.status == "error") {
                     errorPopup(target);
@@ -37,8 +37,8 @@ $(document).ready(function() {
                 errorPopup(target);
             },
             complete: function (data) {
-                $(ref).removeClass('disabled');
-                $(ref).prop("disabled", false);
+                searchSubmit.removeClass('disabled');
+                searchSubmit.prop("disabled", false);
             }
         });
     });
@@ -48,7 +48,7 @@ $(document).ready(function() {
         $('.popover').popover('hide');
         rerollBtn.addClass('disabled');
         rerollBtn.prop("disabled", true);
-        let target = '[data-target=' + rerollBtn.data("target") + ']';
+        let target = '[data-target="rerollPopover"]';
 
         $.ajax({
             type: "GET",

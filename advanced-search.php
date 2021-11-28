@@ -23,15 +23,15 @@
 
     <section style="padding-top: 5rem; padding-bottom: 2rem;">
         <div class="container-fluid">
-            <form id="searchForm" class="col-6 mx-auto form">
+            <form id="searchForm" class="col-6 mx-auto form" >
                 <div class="form-group input-group">
                     <input type="text" name="searchText" class="form-control" placeholder="Enter Search">
                 </div>
                 <div class="row mx-auto">
                     <div>
                         <select name="searchType" class="btn btn-light">
-                            <option value="Recipe">Recipe Name</option>
-                            <option value="Chef">Chef</option>
+                            <option value="recipename">Recipe Name</option>
+                            <option value="username">Chef</option>
                         </select>
                         <select name="recipetype" class="btn btn-light">
                             <option selected="true" value="">All Recipes</option>
@@ -45,16 +45,16 @@
                         </select>
                     </div>
                     <div class="col-2 form-group ml-auto">
-                        <input type="submit" id="searchSubmit" name="searchBtn" class="btn btn-primary btn-block" value="Search">
+                        <input type="submit" id="searchSubmit" name="searchBtn" class="btn btn-primary btn-block" value="Search" data-target="searchButton">
                     </div>
                 <div>
             </form>
         </div>
     </section>
 
-    <section id="results">
+    <section>
         <div class="container-fluid">
-            <div class="row">
+            <div class="row" id="results">
                 
             </div>
         </div>

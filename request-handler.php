@@ -1,6 +1,5 @@
 <?php
 require 'config.php';
-require 'recipe-card.php';
 $database = new Database();
 
 header('Content-type: application/json');
@@ -74,15 +73,6 @@ else if(isset($_POST['signout'])) {
 
     header('Location: index.php');
 }
-else if(isset($_POST['deleteProfile'])) {
-    $database->query("DELETE FROM Users WHERE userID = :userID;");
-    $database->bind(':userID', $_SESSION['userid']);
-    $userinfo = $database->execute();
-
-    unset($_SESSION['userid']);
-    unset($_SESSION['username']);
-    header('Location: index.php');
-}
 else if(isset($_POST['updateProfile'])) {
     if(!empty($_POST['updateName'])) {
         $database->query("UPDATE users SET username = :updatedname WHERE userid = :sessionid");
@@ -139,11 +129,33 @@ else if(isset($_POST['createRecipe'])) {
     }
 }
 
-else if(isset($_POST['searchBtn'])) {
-    if(!empty($_POST['searchText'])) {
-        $database->query("SELECT * FROM recipes WHERE recipename LIKE '&:userInput&'");
-        $database->bind(':userInput', $_POST['searchText']);
+else if(isset($_GET['search'])) {
+    if(!empty($_GET['searchText'])) {
+        if($_GET['searchType'] == "recipename") {
+            $lower = strtolower($_GET['searchText']);
+            $database->query("SELECT Recipes.*, Users.username FROM (Users INNER JOIN (SELECT * FROM recipes WHERE LOWER(recipename) LIKE :userInput AND foodtype LIKE :types) as Recipes on Users.userID=Recipes.chefID)");
+            $database->bind(':userInput', '%' . $lower . '%');
+            $database->bind(':types', '%' . $_GET['recipetype'] . '%');
+            $recipes = $database->results();
+            
+            if(isset($recipes)){
+                $response['status'] = 'success';
+                $response['data'] = getRecipeCards($database, $recipes);
+            }
+        }
+        else if($_GET['searchType'] == "username") {
+            $database->query("SELECT Recipes.*, Users.username FROM (Users INNER JOIN (SELECT * FROM recipes WHERE foodtype LIKE :types) as Recipes on Users.userID=Recipes.chefID AND LOWER(Users.username) LIKE :chefname)");
+            $database->bind(':types', '%' . $_GET['recipetype'] . '%');
+            $database->bind(':chefname', '%' . $_GET['searchText'] . '%');
+            $recipes = $database->results();
+            
+            if(isset($recipes)){
+                $response['status'] = 'success';
+                $response['data'] = getRecipeCards($database, $recipes);
+            }
+        }
     }
+
     else {
         $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY recipeID DESC;");
         $recipes = $database->results();
@@ -152,7 +164,6 @@ else if(isset($_POST['searchBtn'])) {
             $response['status'] = 'success';
             $response['data'] = getRecipeCards($database, $recipes);
         }
-
-        echo json_encode($response);
     }
+    echo json_encode($response);
 }
