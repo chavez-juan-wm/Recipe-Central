@@ -5,10 +5,10 @@
 
     class Database
     {
-        private $host = 'localhost';
+      /*  private $host = 'localhost';
         private $dbuser = 'postgres';
         private $dbpass = '';          // Update the password with your postgresql password
-        private $dbname='postgres';
+        private $dbname='postgres';*/
         private $dbh;
         private $stmt;
         private $isExecuted;
@@ -16,7 +16,11 @@
         public function __construct() {
             // Create new PDO
             try {
-                $this->dbh = new PDO("pgsql:host=$this->host;dbname=$this->dbname", $this->dbuser, $this->dbpass, array(PDO::ATTR_PERSISTENT => true));
+                $url = parse_url(getenv('DATABASE_URL'));
+                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+                $this->dbh = new PDO($dsn, $url['user'], $url['pass'], array(PDO::ATTR_PERSISTENT => true));
+
+                //$this->dbh = new PDO("pgsql:host=$this->host;dbname=$this->dbname", $this->dbuser, $this->dbpass, array(PDO::ATTR_PERSISTENT => true));
             }
             catch (PDOException $e){
                 echo "Error: " . $e->getMessage() . "<br/>";
