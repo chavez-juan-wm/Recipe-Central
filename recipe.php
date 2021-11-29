@@ -29,23 +29,72 @@
 
     <section style="padding-top: 5rem;">
         <div class="container-fluid">
-            <div class="text-center">
-                <h3><?php
-                    if(isset($recipeinfo)){
-                        echo $recipeinfo['recipename'];
-                    }
-                    else{
-                        echo "Recipe";
-                    }
-                    ?></h3><hr/>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3><?php
+                        if(isset($recipeinfo)){
+                            echo $recipeinfo['recipename'];
+                        }
+                        else{
+                            echo "Recipe";
+                        }
+                        ?></h3><hr/>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!--  Recipe Edit  -->
-    <section>
-        <div class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Ingredients</h5>
+                        <ul class="list-group">
+                            <?php
+                            if(isset($recipeinfo)){
+                                $ingredientArray = json_decode(str_replace(['{', '}'], ['[', ']'], $recipeinfo['ingredients']));
+                                for ($x = 0; $x < count($ingredientArray); $x++) {
+                                    echo '<li class="list-group-item">' . $ingredientArray[$x] . '</li>';
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="cont">
+                                    <div class="image-wrapper">
+                                        <img alt="Recipe Image Preview" src="<?php if(isset($recipeinfo)) echo $recipeinfo['pictureurl'] ?>" class="img-fluid img-thumbnail">
+                                        <button class="<?php if(isset($_SESSION['userid'])){echo "bookmark";} else{echo "login";} ?> btn btn-info btn-md" data-recipeid="<?php if(isset($recipeinfo)) echo $recipeinfo['recipeid'] ?>">
+                                            <i class="<?php
+                                            if(isset($_SESSION['userid']) && isset($recipeinfo)) {
+                                                $database->query("SELECT * FROM bookmarks WHERE userid=" . $_SESSION['userid'] ." AND recipeid=" . $recipeinfo['recipeid'] . ";");
+                                                $results = $database->results();
 
+                                                if (count($results) == 0) {echo "far";}
+                                                else {echo "fas";}
+                                            }
+                                            else {echo "far";} ?> fa-bookmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <h5>Nutrition Facts</h5>
+                                <p>Calories: <?php if(isset($recipeinfo)) echo ($recipeinfo['protein']*4 +$recipeinfo['carbs']*4 + $recipeinfo['fat']*9) ?></p>
+                                <p>Protein: <?php if(isset($recipeinfo)) echo $recipeinfo['protein'] . 'g' ?></p>
+                                <p>Carbs: <?php if(isset($recipeinfo)) echo $recipeinfo['carbs'] . 'g' ?></p>
+                                <p>Fat: <?php if(isset($recipeinfo)) echo $recipeinfo['fat'] . 'g' ?></p>
+                                <p>Sugars: <?php if(isset($recipeinfo)) echo $recipeinfo['sugars'] . 'g' ?></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br><p class="text-muted">Chef: <?php if(isset($recipeinfo)) echo $recipeinfo['username'] ?></p>
+                                <i class="text-muted"><?php if(isset($recipeinfo)) echo $recipeinfo['foodtype'] ?></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -57,5 +106,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     <script src="js/scroll-to-top.js"></script>
+    <script src="js/ajax-requests.js"></script>
 </body>
 </html>
