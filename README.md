@@ -86,7 +86,7 @@ The app won't work without a database connection. In `config.php`, set `$dbpass`
 from the installation process. Also make sure that Postgres is running with the `WAPP Manager Tool`.
 
 I've provided an SQL script that generates the necessary tables and fills them with data. 
-It can be found in `SQL Scripts/fill-database.sql`.
+It can be found in `SQLScripts/fill-database.sql`.
 
 
 ### Auto-Start Services

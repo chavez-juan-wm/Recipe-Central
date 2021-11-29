@@ -16,10 +16,12 @@
         public function __construct() {
             // Create new PDO
             try {
+                // Retrieve database info from heroku
                 $url = parse_url(getenv('DATABASE_URL'));
                 $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
                 $this->dbh = new PDO($dsn, $url['user'], $url['pass'], array(PDO::ATTR_PERSISTENT => true));
 
+                // Manual local database connection
                 //$this->dbh = new PDO("pgsql:host=$this->host;dbname=$this->dbname", $this->dbuser, $this->dbpass, array(PDO::ATTR_PERSISTENT => true));
             }
             catch (PDOException $e){
