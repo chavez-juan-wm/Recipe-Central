@@ -232,3 +232,5 @@ else if(isset($_POST['like'])) {
 
     echo json_encode($response);
 }
+
+$database = null;

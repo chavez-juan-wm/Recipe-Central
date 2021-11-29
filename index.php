@@ -103,6 +103,7 @@
                 <?php
                     $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID) ORDER BY RANDOM() DESC LIMIT 6;");
                     echo getRecipeCards($database, $database->results());
+                    $database = null;
                 ?>
             </div>
         </div>

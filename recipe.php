@@ -68,6 +68,7 @@
                                             if(isset($_SESSION['userid']) && isset($recipeinfo)) {
                                                 $database->query("SELECT * FROM bookmarks WHERE userid=" . $_SESSION['userid'] ." AND recipeid=" . $recipeinfo['recipeid'] . ";");
                                                 $results = $database->results();
+                                                $database = null;
 
                                                 if (count($results) == 0) {echo "far";}
                                                 else {echo "fas";}

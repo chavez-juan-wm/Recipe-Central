@@ -63,6 +63,8 @@
                     else{
                         echo getRecipeCards($database, $results, true);
                     }
+
+                    $database = null;
                 ?>
             </div>
         </div>

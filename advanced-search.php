@@ -1,6 +1,5 @@
 <?php
     require 'config.php';
-    $database = new Database();
 ?>
 
 <!DOCTYPE html>

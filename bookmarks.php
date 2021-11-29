@@ -1,11 +1,12 @@
 <?php
 require 'config.php';
-$database = new Database();
 
 if(!isset($_SESSION['userid']) || empty($_SESSION['userid'])){
     http_response_code(401);
     die();
 }
+
+$database = new Database();
 ?>
 
 <!DOCTYPE html>
@@ -35,17 +36,18 @@ if(!isset($_SESSION['userid']) || empty($_SESSION['userid'])){
 
             <div class="row">
                 <?php
+                    $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN (SELECT Recipes.* FROM (Bookmarks INNER JOIN Recipes ON Bookmarks.recipeID = Recipes.recipeID) WHERE userID = :userID) AS Recipes ON Users.userid = Recipes.chefID) ORDER BY recipeID DESC;");
+                    $database->bind(':userID', $_SESSION['userid']);
+                    $results = $database->results();
 
-                $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN (SELECT Recipes.* FROM (Bookmarks INNER JOIN Recipes ON Bookmarks.recipeID = Recipes.recipeID) WHERE userID = :userID) AS Recipes ON Users.userid = Recipes.chefID) ORDER BY recipeID DESC;");
-                $database->bind(':userID', $_SESSION['userid']);
-                $results = $database->results();
+                    if(count($results) == 0){
+                        echo "<a class='h4 mx-auto' href='advanced-search.php'> Start finding new favorite recipes today! </a>";
+                    }
+                    else{
+                        echo getRecipeCards($database, $results);
+                    }
 
-                if(count($results) == 0){
-                    echo "<a class='h4 mx-auto' href='advanced-search.php'> Start finding new favorite recipes today! </a>";
-                }
-                else{
-                    echo getRecipeCards($database, $results);
-                }
+                    $database = null;
                 ?>
             </div>
         </div>

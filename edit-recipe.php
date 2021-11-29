@@ -9,6 +9,7 @@
     $database->query("SELECT * FROM (Users INNER JOIN Recipes ON Users.userID = Recipes.chefID AND userid=". $_SESSION['userid'] .") WHERE recipeid=:recipeID;");
     $database->bind(':recipeID', $_GET['recipeid']);
     $recipeinfo = $database->results()[0];
+    $database = null;
     if(!isset($recipeinfo) || empty($recipeinfo)){
         http_response_code(403);
         die();
