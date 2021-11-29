@@ -73,6 +73,87 @@ $(document).ready(function() {
         });
     });
 
+    $("#dislike").click(function() {
+        let dislikeBtn = $(this);
+        $('.popover').popover('hide');
+        dislikeBtn.addClass('disabled');
+        dislikeBtn.prop("disabled", true);
+        let icon = dislikeBtn.children('i').eq(0);
+        let chefid = dislikeBtn.data("chefid1")
+        let target = '[data-chefid1=' + chefid + ']';
+
+        $.ajax({
+            type: "POST",
+            url: 'request-handler.php',
+            data: {dislike: chefid},
+            dataType: 'json',
+            success: function(response) {
+                if(response.status === 'success'){
+                    icon.removeClass('far').addClass('fas');
+
+                    $("#like").removeClass('disabled');
+                    $("#like").prop("disabled", false);
+                    let icon2 = $("#like").children('i').eq(0);
+
+                    if(icon2.hasClass("fas")){
+                        icon2.removeClass('fas').addClass('far');
+                    }
+                }
+                else if(response.status === "error"){
+                    errorPopup(target);
+                    dislikeBtn.removeClass('disabled');
+                    dislikeBtn.prop("disabled", false);
+                }
+            },
+            error: function (){
+                errorPopup(target);
+                dislikeBtn.removeClass('disabled');
+                dislikeBtn.prop("disabled", false);
+            }
+        });
+    });
+
+    $("#like").click(function() {
+        let likeBtn = $(this);
+        $('.popover').popover('hide');
+        likeBtn.addClass('disabled');
+        likeBtn.prop("disabled", true);
+        let icon = likeBtn.children('i').eq(0);
+        let chefid = likeBtn.data("chefid2")
+        let target = '[data-chefid2=' + chefid + ']';
+
+        $.ajax({
+            type: "POST",
+            url: 'request-handler.php',
+            data: {like: chefid},
+            dataType: 'json',
+            success: function(response) {
+                if(response.status === 'success'){
+                    icon.removeClass('far').addClass('fas');
+
+                    $("#dislike").removeClass('disabled');
+                    $("#dislike").prop("disabled", false);
+
+                    let icon2 = $("#dislike").children('i').eq(0);
+
+                    if(icon2.hasClass("fas")){
+                        icon2.removeClass('fas').addClass('far');
+                    }
+                }
+                else if(response.status === "error"){
+                    errorPopup(target);
+                    likeBtn.removeClass('disabled');
+                    likeBtn.prop("disabled", false);
+                }
+            },
+            error: function (){
+                errorPopup(target);
+                likeBtn.removeClass('disabled');
+                likeBtn.prop("disabled", false);
+            }
+        });
+    });
+
     $('#logInForm').on('submit', function (e) {
         e.preventDefault(); // Stop the form from submitting
         $('#logInErrLabel').empty();

@@ -90,6 +90,10 @@
                             <div class="col-md-12">
                                 <br><p class="text-muted">Chef: <?php if(isset($recipeinfo)) echo $recipeinfo['username'] ?></p>
                                 <i class="text-muted"><?php if(isset($recipeinfo)) echo $recipeinfo['foodtype'] ?></i>
+
+                                <br><br>
+                                <button id="dislike" class="btn btn-danger btn-md" data-chefid1="<?php if(isset($recipeinfo)) echo $recipeinfo['chefid'] ?>"><i class="far fa-thumbs-down"></i></button>
+                                <button id="like" class="btn btn-success btn-md" data-chefid2="<?php if(isset($recipeinfo)) echo $recipeinfo['chefid'] ?>"><i class="far fa-thumbs-up"></i></button>
                             </div>
                         </div>
                     </div>

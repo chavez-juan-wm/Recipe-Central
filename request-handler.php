@@ -212,3 +212,23 @@ else if(isset($_GET['search'])) {
     }
     echo json_encode($response);
 }
+else if(isset($_POST['dislike'])) {
+    $database->query("UPDATE users SET rating = rating - 1 WHERE userid = :chefID;");
+    $database->bind(':chefID', $_POST['dislike']);
+
+    if($database->execute()) {
+        $response['status'] = 'success';
+    }
+
+    echo json_encode($response);
+}
+else if(isset($_POST['like'])) {
+    $database->query("UPDATE users SET rating = rating + 1 WHERE userid = :chefID;");
+    $database->bind(':chefID', $_POST['like']);
+
+    if($database->execute()) {
+        $response['status'] = 'success';
+    }
+
+    echo json_encode($response);
+}
