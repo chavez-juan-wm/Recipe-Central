@@ -123,7 +123,7 @@ else if(isset($_POST['createRecipe'])) {
     $database->bind(':sugars', $_POST['sugars']);
     $results = $database->results();
 
-    if(isset($results)) {
+    if(isset($results[0])) {
         foreach($ingredientArray as $item) {
             $database->query("UPDATE recipes SET ingredients = ARRAY_APPEND(ingredients, :array) WHERE recipeid = :insertedid");
             $database->bind(':array', $item);
