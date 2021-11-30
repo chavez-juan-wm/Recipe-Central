@@ -41,7 +41,7 @@
                             <ul class='navbar-nav ml-auto'> 
                             
                             <li class='nav-item'> 
-                                <a class='nav-link' href='profile.php'> " . $_SESSION['username'] . "</a> 
+                                <a class='nav-link' href='profile.php?userid=" . $_SESSION['userid'] . "'> " . $_SESSION['username'] . "</a> 
                             </li>"
                 . $logout .
                 "</ul>";

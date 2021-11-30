@@ -53,7 +53,7 @@
                 <div class="col-lg-6 col-sm-6">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
-                            <i class="fas fa-heart m-auto text-primary"></i>
+                            <i class="fas fa-heart m-auto text-primary" role="button"></i>
                         </div>
                         <h3>Nutrition Facts</h3>
                         <p class="lead mb-0">View calories, protein, carbs, etc.</p>
@@ -63,7 +63,7 @@
                 <div class="col-lg-6 col-sm-6">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex">
-                            <i class="fas fa-bookmark m-auto text-primary"></i>
+                            <i class="fas fa-bookmark m-auto text-primary" role="button"></i>
                         </div>
                         <h3>Bookmark</h3>
                         <p class="lead mb-0">Save recipes to view later</p>

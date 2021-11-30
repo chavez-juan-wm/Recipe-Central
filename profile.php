@@ -1,15 +1,27 @@
 <?php
     require 'config.php';
 
-    if(!isset($_SESSION['userid']) || empty($_SESSION['userid'])){
-        http_response_code(401);
+    if(isset($_GET["userid"])){
+        $database = new Database();
+        $database->query("SELECT userName, email, rating FROM Users WHERE userid=:userid;");
+        $database->bind(':userid', $_GET["userid"]);
+        $userinfo = $database->results()[0];
+
+        if(isset($userinfo)){
+            $personalAccount = false;
+            if($_SESSION['userid'] == $_GET["userid"]){
+                $personalAccount = true;
+            }
+        }
+        else{
+            http_response_code(404);
+            die();
+        }
+    }
+    else{
+        http_response_code(404);
         die();
     }
-
-    $database = new Database();
-    $database->query("SELECT userName, email, rating FROM Users WHERE userid=:userid;");
-    $database->bind(':userid', $_SESSION['userid']);
-    $userinfo = $database->results()[0];
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +49,13 @@
                 <h1><?php echo $userinfo['username'] ?></h1>
                 <h3>Rating: <?php echo $userinfo['rating'] ?></h3><br><br>
 
-                <div class="row">
-                    <button class="col-2 mx-auto btn btn-info btn-block" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
-                </div>
+                <?php
+                    if($personalAccount){
+                        echo '<div class="row">
+                                <button class="col-2 mx-auto btn btn-info btn-block" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                              </div>';
+                    }
+                ?>
             </div>
         </div>
     </section>
@@ -48,20 +64,30 @@
     <section class="bg-light" style="min-height: 67.5vh;">
         <div class="container-fluid">
             <div class="text-center">
-                <h3>Your Recipes</h3> <hr/>
+                <h3><?php if($personalAccount) echo 'Your'; ?> Recipes</h3> <hr/>
             </div>
 
             <div class="row">
                 <?php
-                    $database->query("SELECT Recipes.*, Users.userName FROM (Users INNER JOIN Recipes ON Users.userid = Recipes.chefID) WHERE Users.userid=:userid ORDER BY recipeID DESC;");
-                    $database->bind(':userid', $_SESSION['userid']);
+                    $database->query("SELECT * FROM recipes WHERE chefid=:userid ORDER BY recipeID DESC;");
+                    $database->bind(':userid', $_GET['userid']);
                     $results = $database->results();
+                    $size = count($results);
 
-                    if(count($results) == 0){
-                        echo "<a class='h4 mx-auto' href='create-recipe.php'> Create your own recipe today! </a>";
+                    if($size == 0){
+                        if($personalAccount){
+                            echo "<a class='h4 mx-auto' href='create-recipe.php'> Create your own recipe today! </a>";
+                        }
+                        else{
+                            echo "<h4 class='mx-auto'>This user hasn't created any recipes yet</h4>";
+                        }
                     }
                     else{
-                        echo getRecipeCards($database, $results, true);
+                        for ($x = 0; $x < $size; $x++) {
+                            $results[$x]['username'] = $userinfo['username'];
+                        }
+
+                        echo getRecipeCards($database, $results, $personalAccount);
                     }
 
                     $database = null;
@@ -117,7 +143,7 @@
                             </form>
                             <form method="post" action="request-handler.php" class="form">
                                 <div class="form-group">
-                                    <input type="submit" id="updateBtn" name="deleteProfile" class="btn btn-danger btn-block" value="Delete Account">
+                                    <input type="submit" name="deleteProfile" class="btn btn-danger btn-block" value="Delete Account">
                                 </div>
                             </form>
                         </article>
