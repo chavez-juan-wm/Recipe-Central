@@ -106,7 +106,7 @@ else if(isset($_POST['updateProfile'])) {
         $database->execute();
     }
 
-    header('Location: profile.php');
+    header('Location: profile.php?userid=' . $_SESSION['userid']);
 }
 else if(isset($_POST['createRecipe'])) {
     $_POST['ingredients'] = str_replace(",", ", ", str_replace("\0", "", str_replace("\v", "", str_replace("\t", "", str_replace("\r", "", str_replace("\n", "", "this is a fake string please dont ever input this as a n ingredient," . $_POST['ingredients']))))));
@@ -134,7 +134,7 @@ else if(isset($_POST['createRecipe'])) {
         $database->bind(':insertedid', $results[0]['recipeid']);
         $database->execute();
 
-        header('Location: profile.php');
+        header('Location: profile.php?userid=' . $_SESSION['userid']);
     }
 }
 else if(isset($_POST['updateRecipe'])) {
@@ -164,7 +164,7 @@ else if(isset($_POST['updateRecipe'])) {
         $database->execute();
     }
 
-    header('Location: profile.php');
+    header('Location: profile.php?userid=' . $_SESSION['userid']);
 }
 else if(isset($_POST['deleteRecipe'])) {
     $database->query("DELETE FROM Recipes WHERE recipeID = :recipeID AND chefID = :userID;");
@@ -172,7 +172,7 @@ else if(isset($_POST['deleteRecipe'])) {
     $database->bind(':userID', $_SESSION['userid']);
     $userinfo = $database->execute();
 
-    header('Location: profile.php');
+    header('Location: profile.php?userid=' . $_SESSION['userid']);
 }
 else if(isset($_GET['search'])) {
     if(!empty($_GET['searchText'])) {
