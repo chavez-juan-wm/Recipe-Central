@@ -109,7 +109,7 @@ else if(isset($_POST['updateProfile'])) {
     header('Location: profile.php');
 }
 else if(isset($_POST['createRecipe'])) {
-    $_POST['ingredients'] = str_replace(",", ", ", "this is a fake string please dont ever input this as a n ingredient," . $_POST['ingredients']);
+    $_POST['ingredients'] = str_replace(",", ", ", trim("this is a fake string please dont ever input this as a n ingredient," . $_POST['ingredients'], "\n\r\t\v\0"));
     $ingredientArray = explode(',', $_POST['ingredients']);
     
     $database->query("INSERT INTO recipes(chefID, recipeName, foodType, pictureUrl, protein, carbs, fat, sugars) VALUES (:chefid, :recipename, :foodtype, :pictureurl, :protein, :carbs, :fat, :sugars) RETURNING recipeid");
@@ -138,7 +138,7 @@ else if(isset($_POST['createRecipe'])) {
     }
 }
 else if(isset($_POST['updateRecipe'])) {
-    $_POST['ingredients'] = "this is a fake string please dont ever input this as a n ingredient, " . $_POST['ingredients'];
+    $_POST['ingredients'] = str_replace(",", ", ", trim("this is a fake string please dont ever input this as a n ingredient," . $_POST['ingredients'], "\n\r\t\v\0"));
     $ingredientArray = explode(',', $_POST['ingredients']);
 
     $database->query("UPDATE Recipes SET recipename=:recipename, foodtype=:foodtype, pictureurl=:pictureurl, ingredients = null, protein=:protein, carbs=:carbs, fat=:fat, sugars=:sugars WHERE recipeid=:recipeID");
