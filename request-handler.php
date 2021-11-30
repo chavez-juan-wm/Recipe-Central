@@ -109,7 +109,7 @@ else if(isset($_POST['updateProfile'])) {
     header('Location: profile.php');
 }
 else if(isset($_POST['createRecipe'])) {
-    $_POST['ingredients'] = "this is a fake string please dont ever input this as a n ingredient, " . $_POST['ingredients'];
+    $_POST['ingredients'] = str_replace(",", ", ", "this is a fake string please dont ever input this as a n ingredient," . $_POST['ingredients']);
     $ingredientArray = explode(',', $_POST['ingredients']);
     
     $database->query("INSERT INTO recipes(chefID, recipeName, foodType, pictureUrl, protein, carbs, fat, sugars) VALUES (:chefid, :recipename, :foodtype, :pictureurl, :protein, :carbs, :fat, :sugars) RETURNING recipeid");
