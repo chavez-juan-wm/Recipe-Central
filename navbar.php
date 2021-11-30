@@ -16,10 +16,10 @@
 
         $login = '<ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#signUpModal" href="#"><span class="fas fa-user-plus"></span> Sign Up </a>
+                    <a class="nav-link" data-toggle="modal" data-target="#signUpModal" role="button"><span class="fas fa-user-plus"></span> Sign Up </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#logInModal" href="#"><span class="fas fa-sign-in-alt"></span> Login </a>
+                    <a class="nav-link" data-toggle="modal" data-target="#logInModal" role="button"><span class="fas fa-sign-in-alt"></span> Login </a>
                 </li>
                 
             </ul>';
@@ -47,7 +47,12 @@
                 "</ul>";
         }
         else {
-            $nav = $nav . "</ul>" . $login;
+            $nav = $nav . "<li class='nav-item'> 
+                                <a class='nav-link' data-toggle='modal' data-target='#logInModal' role='button'> Create Recipe </a> 
+                            </li> 
+                            <li class='nav-item'> 
+                                <a class='nav-link' data-toggle='modal' data-target='#logInModal' role='button'> Bookmarks </a> 
+                            </li></ul>" . $login;
         }
         $nav = $nav . "</div></div></nav>";
 
