@@ -189,9 +189,10 @@ else if(isset($_GET['search'])) {
             }
         }
         else if($_GET['searchType'] == "username") {
+            $lower = strtolower($_GET['searchText']);
             $database->query("SELECT Recipes.*, Users.username FROM (Users INNER JOIN (SELECT * FROM recipes WHERE foodtype LIKE :types) as Recipes on Users.userID=Recipes.chefID AND LOWER(Users.username) LIKE :chefname)");
             $database->bind(':types', '%' . $_GET['recipetype'] . '%');
-            $database->bind(':chefname', '%' . $_GET['searchText'] . '%');
+            $database->bind(':chefname', '%' . $lower . '%');
             $recipes = $database->results();
             
             if(isset($recipes)){
