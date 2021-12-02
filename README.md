@@ -30,7 +30,7 @@ by running the installed manager tool. You can find it by using the Windows sear
 `WAPP packaged by Bitnami Manager Tool`. The _Manage Servers_ tab will show you the status 
 and allow you to start or stop the servers.
 
-![WAPP App Preview](img/docs/wapp.png)
+![WAPP App Preview](docs/img/wapp.png)
 
 After verifying that Apache is running, open a web browser and enter `localhost:PORT`, where PORT is the 
 Apache web server port you picked during the installation. In my case I used the default
@@ -98,6 +98,6 @@ Within the app find _wappstackApache_ and _wappStackPostgreSQL_. Right-click eac
 the “Properties -> Startup Type” field. You might also have _postgresql-x64-14_ in there on auto-start. I recommend
 setting that service to manual as well.
 
-![WAPP App Preview](img/docs/services.png)
+![WAPP App Preview](docs/img/services.png)
 
-![WAPP App Preview](img/docs/startup.png)
+![WAPP App Preview](docs/img/startup.png)
