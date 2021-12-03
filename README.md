@@ -1,6 +1,11 @@
 # Recipe-Central
 This is a web app designed for users to be able to create, view, and bookmark recipes.
 
+## View the Website
+Our web app is currently hosted on Heroku. 
+
+You can interact with it here: https://recipe-central-asu.herokuapp.com/
+
 ## Setting Up the Local Testing Environment
 **WAPP** is a web development stack for **W**indows that includes **A**pache, **P**HP, and **P**ostgreSQL.
 
